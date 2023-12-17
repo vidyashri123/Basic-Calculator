@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #calculator {
+      width: 300px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #display {
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 1.5em;
+      text-align: right;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      width: 70px;
+      height: 50px;
+      margin: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="calculator">
+    <div id="display">0</div>
+    <button onclick="appendToDisplay('7')">7</button>
+    <button onclick="appendToDisplay('8')">8</button>
+    <button onclick="appendToDisplay('9')">9</button>
+    <button onclick="appendToDisplay('/')">/</button>
+    <br>
+    <button onclick="appendToDisplay('4')">4</button>
+    <button onclick="appendToDisplay('5')">5</button>
+    <button onclick="appendToDisplay('6')">6</button>
+    <button onclick="appendToDisplay('*')">*</button>
+    <br>
+    <button onclick="appendToDisplay('1')">1</button>
+    <button onclick="appendToDisplay('2')">2</button>
+    <button onclick="appendToDisplay('3')">3</button>
+    <button onclick="appendToDisplay('-')">-</button>
+    <br>
+    <button onclick="appendToDisplay('0')">0</button>
+    <button onclick="appendToDisplay('.')">.</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="appendToDisplay('+')">+</button>
+    <br>
+    <button onclick="clearDisplay()">C</button>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+    let currentInput = '0';
+
+    function appendToDisplay(value) {
+      if (currentInput === '0') {
+        currentInput = '';
+      }
+      currentInput += value;
+      display.textContent = currentInput;
+    }
+
+    function clearDisplay() {
+      currentInput = '0';
+      display.textContent = currentInput;
+    }
+
+    function calculate() {
+      try {
+        currentInput = eval(currentInput).toString();
+        display.textContent = currentInput;
+      } catch (error) {
+        display.textContent = 'Error';
+      }
+    }
+
+    // Handle keyboard input
+    document.addEventListener('keydown', function(event) {
+      const key = event.key;
+      if (!isNaN(key) || key === '.' || key === '+' || key === '-' || key === '*' || key === '/') {
+        appendToDisplay(key);
+      } else if (key === 'Enter') {
+        calculate();
+      } else if (key === 'c' || key === 'C') {
+        clearDisplay();
+      }
+    });
+  </script>
+</body>
+</html>
